@@ -6,4 +6,6 @@
     console.log(data);
 </script>
 
-<SvelteMarkdown source={data.post.content} />
+<div class="prose">
+    <SvelteMarkdown source={data.post.content} />
+</div>

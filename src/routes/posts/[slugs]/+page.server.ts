@@ -9,7 +9,6 @@ export const load = (async ({url}) => {
     const querySnapshot = await getDocs(q);
     let post = {};
     querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
         post = doc.data();
     });
 
