@@ -4,11 +4,12 @@
     
     export let data: PageData;
     console.log(data);
-    let contentWithLineBreaks = data.post.content.replace(/\\n/g, '\n');
+    let content = data.post.content;
+
 </script>
 
 <div class="flex w-full justify-center">
-    <div class="prose">
-        <SvelteMarkdown source={contentWithLineBreaks} />
+    <div class="prose max-w-screen-md w-screen px-4 overflow-x-hidden">
+        <SvelteMarkdown source={content} />
     </div>
 </div>
