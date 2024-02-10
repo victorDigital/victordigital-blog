@@ -25,6 +25,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@vercel/speed-insights": "^1.0.9"
+    "@vercel/speed-insights": "^1.0.9",
+    "firebase": "^10.8.0",
+    "svelte-markdown": "^0.4.1"
   }
 }
