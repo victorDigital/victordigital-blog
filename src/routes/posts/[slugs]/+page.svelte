@@ -11,7 +11,7 @@
     export let data: PageData;
     console.log(data);
     let content = data.post.content;
-    let bannerImgUrl = data.post.bannerImgUrl;
+    let bannerImgUrl = data.post.coverImage;
     let title = data.post.title;
     let subTitle = data.post.subTitle;
     let topic = data.post.topic;
@@ -42,7 +42,7 @@
 
 <div class="flex w-full justify-center mb-4">
     <div class="max-w-screen-lg w-screen lg:px-4">
-        <AspectRatio ratio={16 / 9}>
+        <AspectRatio ratio={16 / 9} class="overflow-hidden">
             <img src={bannerImgUrl} class="lg:rounded-2xl" alt="">
         </AspectRatio>
     </div>
