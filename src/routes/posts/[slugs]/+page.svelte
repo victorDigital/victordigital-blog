@@ -2,7 +2,8 @@
     import type { PageData } from './$types';
     import SvelteMarkdown from "svelte-markdown";
     import PostHeadingRenderer from '$lib/custComp/PostHeadingRenderer.svelte';
-    import { onMount } from "svelte";
+    import CodeBlockRenderer from '$lib/custComp/codeBlockRenderer.svelte';
+    import { onMount } from 'svelte';
     import { smoothScroll } from '$lib/js/utils';
     
     export let data: PageData;
@@ -20,7 +21,7 @@
 </script>
 
 <div class="flex w-full justify-center">
-    <div class="prose max-w-screen-md w-screen px-4 overflow-x-hidden">
-        <SvelteMarkdown source={content} renderers={{heading: PostHeadingRenderer}} />
+    <div class="prose dark:prose-invert max-w-screen-md w-screen px-4 overflow-x-hidden">
+        <SvelteMarkdown source={content} renderers={{heading: PostHeadingRenderer, code: CodeBlockRenderer}} />
     </div>
 </div>
