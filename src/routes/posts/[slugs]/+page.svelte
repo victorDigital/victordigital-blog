@@ -6,7 +6,7 @@
     import { onMount } from 'svelte';
     import { smoothScroll } from '$lib/js/utils';
     import Badge from '$lib/components/ui/badge/badge.svelte';
-    import { AspectRatio } from "$lib/components/ui/aspect-ratio";
+    import Separator from '$lib/components/ui/separator/separator.svelte';
     
     export let data: PageData;
     console.log(data);
@@ -17,6 +17,8 @@
     let topic = data.post.topic;
     let topicColor = data.post.topicColor;
     let minToRead = data.post.minToRead;
+    let date = data.post.date;
+    let author = data.post.author;
 
     onMount(() => {
         const url = new URL(window.location.href);
@@ -42,9 +44,15 @@
 
 <div class="flex w-full justify-center mb-4">
     <div class="max-w-screen-lg w-screen lg:px-4">
-        <AspectRatio ratio={16 / 9} class="overflow-hidden">
-            <img src={bannerImgUrl} class="lg:rounded-2xl" alt="">
-        </AspectRatio>
+        <img src={bannerImgUrl} class="lg:rounded-2xl object-fill mb-3" alt="">
+        <div class="w-full">
+            <p class="text-xs">AF</p>
+            <div class="flex justify-between">
+                <p>{author}</p>
+                <p class="opacity-70">{date}</p>
+            </div>
+        </div>
+        <Separator class="mb-6 mt-3" />
     </div>
 </div>
 
