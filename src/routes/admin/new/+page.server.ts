@@ -16,30 +16,25 @@ export const actions: Actions = {
   default: async (event) => {
     const formData = await event.request.formData();
     const form = await superValidate(formData, formSchema);
+    console.log("Form valid:", form.valid);
     if (!form.valid) {
       return fail(400, {
         form,
       });
     }
 
+    
     const file = formData.get('coverImage');
-    console.log(file + " is the file");
     if (file instanceof File) {
       //read the filename and type
       const filename = file.name;
-      const type = file.type;
-      console.log(filename + " is the filename");
-      console.log(type + " is the type");
 
       //upload file to firebase storage bucket and get url
       const storage = getStorage();
       const storageRef = ref(storage, filename);
-      const snapshot = await uploadBytes(storageRef, file);
-      console.log('Uploaded a blob or file!');
-      console.log(snapshot);
+      await uploadBytes(storageRef, file);
 
       const downloadURL = await getDownloadURL(storageRef);
-      console.log('File available at', downloadURL);
 
       //now create a new post in the firestore
       const post = {
