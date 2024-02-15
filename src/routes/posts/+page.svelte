@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import Separator from "$lib/components/ui/separator/separator.svelte";
+  import PostCard from "$lib/custComp/PostCard.svelte";
 
   export let data: PageData;
   console.log(data);
@@ -19,15 +20,12 @@
     </div>
   </div>
 </div>
-<Separator class="mb-6"/>
+<Separator class="mb-6" />
 
 <div class="container mx-auto">
-  {#each data.posts as post}
-    <a class="flex flex-col gap-2" href="/posts/{post.slug}">
-      <h1 class="text-xl font-bold">{post.title}</h1>
-      <p>{post.subTitle}</p>
-      <p class="opacity-70 text-xs">{post.date}</p>
-      <Separator class="my-4" />
-    </a>
-  {/each}
+  <div class="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-6">
+    {#each data.posts as post}
+      <PostCard {post} />
+    {/each}
+  </div>
 </div>
