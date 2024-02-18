@@ -1,6 +1,6 @@
 import type { Post } from '$lib/types/post';
 import type { PageServerLoad } from './$types';
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs} from "firebase/firestore";
 
 export const load = (async ({url}) => {
     let slug = url.pathname.split('/').pop();
@@ -28,6 +28,7 @@ export const load = (async ({url}) => {
     }; // Initialize post variable with an empty object
     querySnapshot.forEach((doc) => {
         post = doc.data() as Post;
+        post.content = post.content.slice(0, 1000);
     });
 
     console.log(slug);

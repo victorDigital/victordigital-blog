@@ -8,19 +8,24 @@
   import Badge from "$lib/components/ui/badge/badge.svelte";
   import Separator from "$lib/components/ui/separator/separator.svelte";
   import { onMount } from "svelte";
-  import type { Post } from "$lib/types/post";
-  import TableBody from "$lib/components/ui/table/table-body.svelte";
   import TableBodyRenderer from "$lib/custComp/TableBodyRenderer.svelte";
   import TableHeadRenderer from "$lib/custComp/TableHeadRenderer.svelte";
   import TableCellRenderer from "$lib/custComp/TableCellRenderer.svelte";
   import TableRowRenderer from "$lib/custComp/TableRowRenderer.svelte";
-  import * as Tooltip from "$lib/components/ui/tooltip"
+  import * as Tooltip from "$lib/components/ui/tooltip";
   import { Code, Quote } from "radix-icons-svelte";
   import * as Sheet from "$lib/components/ui/sheet";
+  import Button from "$lib/components/ui/button/button.svelte";
 
   export let data: PageData;
   console.log(data);
   let post = data.post;
+  let showLoadMore = true;
+
+  function loadMore() {
+    //fetch
+    showLoadMore = false;
+  }
 
   onMount(() => {
     const url = new URL(window.location.href);
@@ -48,7 +53,7 @@
 
 <div class="flex w-full justify-center mb-4">
   <div class="max-w-screen-lg w-screen lg:px-4">
-    <img src={post.coverImage} class="lg:rounded-2xl object-fill mb-3" alt="" />
+    <img src={post.coverImage} class="lg:rounded-2xl object-fill mb-3 [view-transition-name:postimg]" alt="" />
     <div class="w-full">
       <div class="flex justify-between items-end mx-2">
         <div class="flex flex-row items-center gap-6">
@@ -58,7 +63,10 @@
           </div>
           <div>
             <Tooltip.Root>
-              <Tooltip.Trigger><a href="/raw/{post.uid}"><Code class="text-gray-500 dark:text-gray-400 w-6 h-6" /></a></Tooltip.Trigger>
+              <Tooltip.Trigger
+                ><a href="/raw/{post.uid}"><Code class="text-gray-500 dark:text-gray-400 w-6 h-6" /></a
+                ></Tooltip.Trigger
+              >
               <Tooltip.Content>
                 <p>View page source</p>
               </Tooltip.Content>
@@ -71,9 +79,7 @@
                   <Sheet.Trigger><Quote class="text-gray-500 dark:text-gray-400 w-6 h-6" /></Sheet.Trigger>
                   <Sheet.Content>
                     <Sheet.Header>
-                      <Sheet.Title>
-                        Cite this page
-                      </Sheet.Title>
+                      <Sheet.Title>Cite this page</Sheet.Title>
                       <Sheet.Description>
                         <div>
                           <h5 class="text-lg font-bold">APA</h5>
@@ -82,15 +88,8 @@
                         <div>
                           <h5 class="text-lg font-bold">BibTeX</h5>
                           <code>
-                            @misc&#123;citekey,
-                              author       = "Victor Nielsen",
-                              title        = "{post.title}",
-                              howpublished = "{window.location.href}",
-                              month        = "todo",
-                              year         = "todo",
-                              note         = "",
-                              annote       = ""
-                            &#125;
+                            @misc&#123;citekey, author = "Victor Nielsen", title = "{post.title}", howpublished = "{window
+                              .location.href}", month = "todo", year = "todo", note = "", annote = "" &#125;
                           </code>
                         </div>
                       </Sheet.Description>
@@ -113,17 +112,37 @@
 
 <div class="flex w-full justify-center">
   <div class="prose dark:prose-invert prose-neutral max-w-screen-md w-screen px-4 overflow-x-hidden">
-    <SvelteMarkdown
-      source={post.content}
-      renderers={{
-        heading: PostHeadingRenderer,
-        code: CodeBlockRenderer,
-        table: TableRenderer,
-        tablebody: TableBodyRenderer,
-        tablehead: TableHeadRenderer,
-        tablecell: TableCellRenderer,
-        tablerow: TableRowRenderer,
-      }}
-    />
+    {#if showLoadMore}
+      <SvelteMarkdown
+        source={post.content}
+        renderers={{
+          heading: PostHeadingRenderer,
+          code: CodeBlockRenderer,
+          table: TableRenderer,
+          tablebody: TableBodyRenderer,
+          tablehead: TableHeadRenderer,
+          tablecell: TableCellRenderer,
+          tablerow: TableRowRenderer,
+        }}
+      />
+    {:else}
+      <SvelteMarkdown
+        source={fullContent}
+        renderers={{
+          heading: PostHeadingRenderer,
+          code: CodeBlockRenderer,
+          table: TableRenderer,
+          tablebody: TableBodyRenderer,
+          tablehead: TableHeadRenderer,
+          tablecell: TableCellRenderer,
+          tablerow: TableRowRenderer,
+        }}
+      />
+    {/if}
   </div>
+</div>
+<div class="flex w-full justify-center">
+  {#if showLoadMore}
+    <Button variant="outline" on:click={loadMore}>Load more</Button>
+  {/if}
 </div>

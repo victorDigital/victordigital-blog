@@ -11,7 +11,7 @@
             lang: lang,
             //theme: 'vitesse-black'
             //theme: 'github-light'
-            theme: $mode === 'dark' ? 'material-theme-darker' : 'github-light'
+            theme: $mode === 'dark' ? 'material-theme-darker' : 'catppuccin-latte'
         })
         return html;
     }

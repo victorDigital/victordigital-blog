@@ -23,7 +23,7 @@
 <Separator class="mb-6" />
 
 <div class="container mx-auto">
-  <div class="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-6">
+  <div class="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-6" data-sveltekit-preload-code="viewport">
     {#each data.posts as post}
       <PostCard {post} />
     {/each}
