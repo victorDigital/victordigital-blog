@@ -28,6 +28,8 @@ export const load = (async ({url}) => {
     }; // Initialize post variable with an empty object
     querySnapshot.forEach((doc) => {
         post = doc.data() as Post;
+        // change $$[...]$$ to ```latex $$[...]$$```
+        post.content = post.content.replace(/\$\$([^$]+)\$\$/g, '```latex\n$1\n```');
     });
 
     console.log(slug);
