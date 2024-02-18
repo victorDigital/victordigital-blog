@@ -21,16 +21,21 @@
   console.log(data);
   let post = data.post;
   let showLoadMore = true;
+  let fullContent = post.content;
+  let showedContent = post.content.slice(0, 1000);
 
   function loadMore() {
-    //fetch
+    showedContent = fullContent;
     showLoadMore = false;
   }
 
-  onMount(() => {
+  onMount(async () => {
     const url = new URL(window.location.href);
     const hash = url.hash;
+
     if (hash) {
+      loadMore();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       smoothScroll(hash);
     }
   });
@@ -114,7 +119,7 @@
   <div class="prose dark:prose-invert prose-neutral max-w-screen-md w-screen px-4 overflow-x-hidden">
     {#if showLoadMore}
       <SvelteMarkdown
-        source={post.content}
+        source={showedContent}
         renderers={{
           heading: PostHeadingRenderer,
           code: CodeBlockRenderer,
@@ -143,6 +148,6 @@
 </div>
 <div class="flex w-full justify-center">
   {#if showLoadMore}
-    <Button variant="outline" on:click={loadMore}>Load more</Button>
+    <Button variant="default" class="my-6" on:click={loadMore}>Read more</Button>
   {/if}
 </div>

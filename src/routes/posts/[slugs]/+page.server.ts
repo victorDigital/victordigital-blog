@@ -28,7 +28,6 @@ export const load = (async ({url}) => {
     }; // Initialize post variable with an empty object
     querySnapshot.forEach((doc) => {
         post = doc.data() as Post;
-        post.content = post.content.slice(0, 1000);
     });
 
     console.log(slug);
