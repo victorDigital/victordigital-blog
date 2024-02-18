@@ -81,7 +81,17 @@
                         </div>
                         <div>
                           <h5 class="text-lg font-bold">BibTeX</h5>
-                          <p>@misc{'{'}{post.author}, {post.date}, {post.title}, {window.location.href}{'}'}</p>
+                          <code>
+                            @misc&#123;citekey,
+                              author       = "Victor Nielsen",
+                              title        = "{post.title}",
+                              howpublished = "{window.location.href}",
+                              month        = "todo",
+                              year         = "todo",
+                              note         = "",
+                              annote       = ""
+                            &#125;
+                          </code>
                         </div>
                       </Sheet.Description>
                     </Sheet.Header>
