@@ -22,7 +22,7 @@
   let post = data.post;
   let showLoadMore = true;
   let fullContent = post.content;
-  let showedContent = post.content.slice(0, 1000);
+  let showedContent = post.content.slice(0, 3000);
 
   function loadMore() {
     showedContent = fullContent;

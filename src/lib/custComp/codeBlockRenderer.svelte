@@ -3,33 +3,36 @@
   export let lang: string;
   export let raw: string;
 
-  console.log(lang);
-
   import { codeToHtml } from "shiki";
   import { mode } from "mode-watcher";
   import katex from 'katex';
+  import * as HoverCard from "$lib/components/ui/hover-card";
 
   async function codeBlockRenderer({ code, lang }: { code: string; lang: string }) {
     const html = await codeToHtml(code, {
       lang: lang,
-      //theme: 'vitesse-black'
-      //theme: 'github-light'
       theme: $mode === "dark" ? "material-theme-darker" : "catppuccin-latte",
     });
     return html;
   }
 
   async function mathsExpression(expr: string) {
-    console.log(expr);
-    return katex.renderToString(expr, { displayMode: true, output: "mathml" });
+    return katex.renderToString(expr, { displayMode: true, output: "htmlandmathml", throwOnError: false });
   }
 </script>
 
+<svelte:head>
+  <link rel="stylesheet" href="/katex/katex.min.css" />
+</svelte:head>
+
 {#if lang === "latex"}
   {#await mathsExpression(text) then value}
-  <math>
-    <div class="my-3">{@html value}</div>
-  </math>
+  <HoverCard.Root>
+    <HoverCard.Trigger class="no-underline"><div class="my-3">{@html value}</div></HoverCard.Trigger>
+    <HoverCard.Content class="max-w-md w-screen break-all">
+      <p class="font-mono text-sm">{text}</p>
+    </HoverCard.Content>
+  </HoverCard.Root>
   {/await}
 {:else}
   {#key $mode}
