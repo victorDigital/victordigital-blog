@@ -5,18 +5,17 @@
 
     import { Link2 as Link } from "radix-icons-svelte";
     import { smoothScroll } from "$lib/js/utils";
-    import { replaceState } from "$app/navigation";
+    import { outlineStore } from "$lib/js/store";
 
     // the id of the heading is the text in lower case with spaces replaced by hyphens
-    let id = encodeURIComponent(text.toLowerCase()).replace(/%20/g, "-").replace(/%/g, "-");
+    let id = "a" + encodeURIComponent(text.toLowerCase()).replace(/%20/g, "-").replace(/%/g, "-").replace(/\./g, "");
+
+    $outlineStore = [...$outlineStore as [], { id, text, depth }];
 
 
     function setUrlParam(id: string) {
         return () => {
-            const url = new URL(window.location.href);
-            url.hash = id;
-            replaceState(url.href, { replace: true });
-            smoothScroll(id);
+            smoothScroll("#"+id);
         };
     }
 </script>

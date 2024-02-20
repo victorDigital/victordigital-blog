@@ -16,6 +16,12 @@
   import { Code, Quote } from "radix-icons-svelte";
   import * as Sheet from "$lib/components/ui/sheet";
   import Button from "$lib/components/ui/button/button.svelte";
+  import { outlineStore } from "$lib/js/store";
+  import OutlineRenderer from "$lib/custComp/OutlineRenderer.svelte";
+  
+  $outlineStore = [];
+  let headingsInView: Element[] = [];
+
 
   export let data: PageData;
   console.log(data);
@@ -25,6 +31,7 @@
   let showedContent = post.content.slice(0, 3000);
 
   function loadMore() {
+    $outlineStore = [];
     showedContent = fullContent;
     showLoadMore = false;
   }
@@ -38,7 +45,30 @@
       await new Promise((resolve) => setTimeout(resolve, 1000));
       smoothScroll(hash);
     }
+
+    window.addEventListener("scroll", () => {
+      let temp = findHeadingsInView();
+      if (temp.length > 0) {
+        headingsInView = temp;
+      }
+    });
   });
+
+  function findHeadingsInView() {
+    const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const headingsInView = [];
+
+    for (let i = 0; i < headings.length; i++) {
+      const heading = headings[i];
+      const rect = heading.getBoundingClientRect();
+      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        headingsInView.push(heading);
+      }
+    }
+
+    //filter so only the headings that have an id are left
+    return headingsInView.filter((el) => el.id);
+  }
 </script>
 
 <div class="flex w-full justify-center mb-4">
@@ -145,6 +175,9 @@
       />
     {/if}
   </div>
+  {#if $outlineStore.length > 0}
+    <OutlineRenderer inView={headingsInView} />
+  {/if}
 </div>
 <div class="flex w-full justify-center">
   {#if showLoadMore}
