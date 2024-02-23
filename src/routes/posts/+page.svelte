@@ -4,12 +4,11 @@
   import PostCard from "$lib/custComp/PostCard.svelte";
 
   export let data: PageData;
-  console.log(data);
 </script>
 
-<div class="h-40 w-full">
+<div class="w-full h-40">
   <div class="flex flex-col justify-center h-full">
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container flex items-center justify-between mx-auto">
       <h1 class="text-4xl font-semibold">All Posts</h1>
       <div class="flex gap-4">
         <!--actions-->
@@ -23,7 +22,7 @@
 <Separator class="mb-6" />
 
 <div class="container mx-auto">
-  <div class="columns-1 sm:columns-2 md:columns-3 xl:columns-4 gap-6" data-sveltekit-preload-code="viewport">
+  <div class="gap-6 columns-1 sm:columns-2 md:columns-3 xl:columns-4" data-sveltekit-preload-code="viewport">
     {#each data.posts as post}
       <PostCard {post} />
     {/each}

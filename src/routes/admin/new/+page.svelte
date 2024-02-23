@@ -10,7 +10,6 @@
   import { SuperFormError } from "sveltekit-superforms";
   export let data: PageData;
   let form = data.form;
-  console.log(form);
 
   // prefill the boring stuff
   form.data.date = new Date().toISOString().split("T")[0];
@@ -20,9 +19,9 @@
   form.data.uid = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 3);
 </script>
 
-<div class="h-40 w-full">
+<div class="w-full h-40">
   <div class="flex flex-col justify-center h-full">
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container flex items-center justify-between mx-auto">
       <h1 class="text-4xl font-semibold">New Post</h1>
       <div class="flex gap-4">
         <!--actions-->
@@ -37,7 +36,7 @@
 
 <div class="container mx-auto my-4">
   <Form.Root method="POST" {form} schema={formSchema} let:config enctype="multipart/form-data">
-    <div class="grid-cols-2 grid gap-8">
+    <div class="grid grid-cols-2 gap-8">
       <div>
         <Form.Field {config} name="content">
           <Form.Item>

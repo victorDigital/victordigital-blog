@@ -36,6 +36,5 @@ export const load = (async ({ url }) => {
     post = doc.data() as Post;
   });
 
-  console.log(uid);
   return { uid, post };
 }) satisfies PageServerLoad;

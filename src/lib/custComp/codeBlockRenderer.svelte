@@ -2,11 +2,30 @@
   export let text: string;
   export let lang: string;
 
+  // create a hash of the text must only contain letters and numbers and be less than 32 characters
+  const hash = (text: string) => {
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      const chr = text.charCodeAt(i);
+      hash = (hash << 5) - hash + chr;
+      hash |= 0;
+    }
+    return Math.abs(hash).toString(36).slice(0, 32);
+  };
+
+  const contentHash = hash(text);
+
   import { codeToHtml } from "shiki";
   import { mode } from "mode-watcher";
   import katex from "katex";
   import mermaid from "mermaid";
   import * as HoverCard from "$lib/components/ui/hover-card";
+  import { onMount } from "svelte";
+
+  let ready = false;
+  onMount(() => {
+    ready = true;
+  });
 
   async function codeBlockRenderer({ code, lang }: { code: string; lang: string }) {
     const html = await codeToHtml(code, {
@@ -20,9 +39,13 @@
     return katex.renderToString(expr, { displayMode: true, output: "htmlAndMathml", throwOnError: false });
   }
 
-  async function mermaidRender(expr: string) {
-    mermaid.initialize({ darkMode: $mode === "dark", theme: $mode === "dark" ? "dark" : "neutral" });
-    return mermaid.render("mermaid", expr);
+  async function mermaidRenderer(expr: string) {
+    mermaid.initialize({
+      darkMode: $mode === "dark",
+      theme: $mode === "dark" ? "dark" : "neutral",
+      securityLevel: "loose",
+    });
+    return await mermaid.mermaidAPI.render("mermaid-" + contentHash, expr);
   }
 </script>
 
@@ -40,11 +63,17 @@
     </HoverCard.Root>
   {/await}
 {:else if lang === "mermaid"}
-  {#key $mode}
-    {#await mermaidRender(text) then value}
-      <div class="my-3">{@html value.svg}</div>
-    {/await}
-  {/key}
+  {#if ready}
+    {#key $mode}
+      {#await mermaidRenderer(text) then html}
+        <div>
+          {@html html.svg}
+        </div>
+      {/await}
+    {/key}
+  {:else}
+    <p>Loading...</p>
+  {/if}
 {:else}
   {#key $mode}
     {#await codeBlockRenderer({ code: text, lang: lang })}

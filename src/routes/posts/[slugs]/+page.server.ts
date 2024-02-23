@@ -41,6 +41,5 @@ export const load = (async ({ url }) => {
     );
   });
 
-  console.log(slug);
   return { slug, post };
 }) satisfies PageServerLoad;

@@ -6,7 +6,6 @@
   export let inView: Element[] = [];
 
   function idInView(id: string) {
-    console.log("ran");
     return inView.some((el) => el.id === id);
   }
 
@@ -16,9 +15,9 @@
   });
 </script>
 
-<div class="hidden lg:flex flex-col gap-4 ml-4 max-w-64">
+<div class="flex-col hidden gap-4 ml-4 lg:flex max-w-64">
   <div class="sticky top-20">
-    <h3 class="text-xl font-bold sticky">In This Post</h3>
+    <h3 class="sticky text-xl font-bold">In This Post</h3>
     <div class="flex flex-col">
       {#if ready}
         {#key inView}

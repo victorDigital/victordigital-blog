@@ -24,25 +24,14 @@
 
 
   export let data: PageData;
-  console.log(data);
   let post = data.post;
-  let showLoadMore = true;
-  let fullContent = post.content;
-  let showedContent = post.content.slice(0, 3000);
-
-  function loadMore() {
-    $outlineStore = [];
-    showedContent = fullContent;
-    showLoadMore = false;
-  }
 
   onMount(async () => {
     const url = new URL(window.location.href);
     const hash = url.hash;
 
     if (hash) {
-      loadMore();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       smoothScroll(hash);
     }
 
@@ -147,9 +136,8 @@
 
 <div class="flex justify-center w-full">
   <div class="w-screen max-w-screen-md px-4 overflow-x-hidden prose dark:prose-invert prose-neutral">
-    {#if showLoadMore}
       <SvelteMarkdown
-        source={showedContent}
+        source={post.content}
         renderers={{
           heading: PostHeadingRenderer,
           code: CodeBlockRenderer,
@@ -160,27 +148,8 @@
           tablerow: TableRowRenderer,
         }}
       />
-    {:else}
-      <SvelteMarkdown
-        source={fullContent}
-        renderers={{
-          heading: PostHeadingRenderer,
-          code: CodeBlockRenderer,
-          table: TableRenderer,
-          tablebody: TableBodyRenderer,
-          tablehead: TableHeadRenderer,
-          tablecell: TableCellRenderer,
-          tablerow: TableRowRenderer,
-        }}
-      />
-    {/if}
   </div>
   {#if $outlineStore.length > 0}
     <OutlineRenderer inView={headingsInView} />
-  {/if}
-</div>
-<div class="flex justify-center w-full">
-  {#if showLoadMore}
-    <Button variant="default" class="my-6" on:click={loadMore}>Read more</Button>
   {/if}
 </div>
