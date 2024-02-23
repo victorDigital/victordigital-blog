@@ -3,8 +3,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import { formSchema } from "./schema";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, getFirestore} from "firebase/firestore";
-
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 export const load: PageServerLoad = async () => {
   return {
@@ -23,8 +22,7 @@ export const actions: Actions = {
       });
     }
 
-    
-    const file = formData.get('coverImage');
+    const file = formData.get("coverImage");
     if (file instanceof File) {
       //read the filename and type
       const filename = file.name;
@@ -47,7 +45,7 @@ export const actions: Actions = {
       const db = getFirestore();
       const docRef = await addDoc(collection(db, "posts"), post);
       console.log("Document written with ID: ", docRef.id);
-      throw redirect(302, "/a/"+form.data.uid);
+      throw redirect(302, "/a/" + form.data.uid);
     }
 
     return {

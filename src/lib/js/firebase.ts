@@ -12,18 +12,18 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 // Initialize Firebase
 export function firebaseInit() {
-    let firebase;
-    if (!getApps().length) {
-        firebase = initializeApp(firebaseConfig);
-    } else {
-        firebase = getApp();
-        deleteApp(firebase);
-        firebase = initializeApp(firebaseConfig);
-    }
-    return firebase;
+  let firebase;
+  if (!getApps().length) {
+    firebase = initializeApp(firebaseConfig);
+  } else {
+    firebase = getApp();
+    deleteApp(firebase);
+    firebase = initializeApp(firebaseConfig);
+  }
+  return firebase;
 }

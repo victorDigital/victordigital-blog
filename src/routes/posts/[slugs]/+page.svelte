@@ -71,26 +71,26 @@
   }
 </script>
 
-<div class="flex w-full justify-center mb-4">
-  <div class="max-w-screen-md w-screen px-4">
+<div class="flex justify-center w-full mb-4">
+  <div class="w-screen max-w-screen-md px-4">
     <div class="flex items-center gap-4">
       <Badge
         variant="outline"
         class="{'border-' + post.topicColor + '-700'} {'dark:border-' + post.topicColor + '-500'} text-sm mb-3 mt-6"
         >{post.topic}</Badge
       >
-      <span class="text-sm font-light mb-3 mt-6 ml-2">{post.minToRead} min read</span>
+      <span class="mt-6 mb-3 ml-2 text-sm font-light">{post.minToRead} min read</span>
     </div>
-    <h1 class="text-3xl lg:text-5xl font-black">{post.title}</h1>
-    <h2 class="text-xl font-light mb-6 mt-3">{post.subTitle}</h2>
+    <h1 class="text-3xl font-black lg:text-5xl">{post.title}</h1>
+    <h2 class="mt-3 mb-6 text-xl font-light">{post.subTitle}</h2>
   </div>
 </div>
 
-<div class="flex w-full justify-center mb-4">
-  <div class="max-w-screen-lg w-screen lg:px-4">
+<div class="flex justify-center w-full mb-4">
+  <div class="w-screen max-w-screen-lg lg:px-4">
     <img src={post.coverImage} class="lg:rounded-2xl object-fill mb-3 [view-transition-name:postimg]" alt="" />
     <div class="w-full">
-      <div class="flex justify-between items-end mx-2">
+      <div class="flex items-end justify-between mx-2">
         <div class="flex flex-row items-center gap-6">
           <div>
             <p class="text-xs">AF</p>
@@ -99,7 +99,7 @@
           <div>
             <Tooltip.Root>
               <Tooltip.Trigger
-                ><a href="/raw/{post.uid}"><Code class="text-gray-500 dark:text-gray-400 w-6 h-6" /></a
+                ><a href="/raw/{post.uid}"><Code class="w-6 h-6 text-gray-500 dark:text-gray-400" /></a
                 ></Tooltip.Trigger
               >
               <Tooltip.Content>
@@ -111,7 +111,7 @@
             <Tooltip.Root>
               <Tooltip.Trigger>
                 <Sheet.Root>
-                  <Sheet.Trigger><Quote class="text-gray-500 dark:text-gray-400 w-6 h-6" /></Sheet.Trigger>
+                  <Sheet.Trigger><Quote class="w-6 h-6 text-gray-500 dark:text-gray-400" /></Sheet.Trigger>
                   <Sheet.Content>
                     <Sheet.Header>
                       <Sheet.Title>Cite this page</Sheet.Title>
@@ -141,12 +141,12 @@
         <p class="opacity-70">{post.date}</p>
       </div>
     </div>
-    <Separator class="mb-6 mt-3" />
+    <Separator class="mt-3 mb-6" />
   </div>
 </div>
 
-<div class="flex w-full justify-center">
-  <div class="prose dark:prose-invert prose-neutral max-w-screen-md w-screen px-4 overflow-x-hidden">
+<div class="flex justify-center w-full">
+  <div class="w-screen max-w-screen-md px-4 overflow-x-hidden prose dark:prose-invert prose-neutral">
     {#if showLoadMore}
       <SvelteMarkdown
         source={showedContent}
@@ -179,7 +179,7 @@
     <OutlineRenderer inView={headingsInView} />
   {/if}
 </div>
-<div class="flex w-full justify-center">
+<div class="flex justify-center w-full">
   {#if showLoadMore}
     <Button variant="default" class="my-6" on:click={loadMore}>Read more</Button>
   {/if}
