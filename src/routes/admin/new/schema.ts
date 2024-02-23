@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   content: z.string().min(100),
-  title: z.string().min(20).max(100),
-  subTitle: z.string().min(40).max(200),
-  slug: z.string().min(10).max(100),
+  title: z.string().min(1).max(100),
+  subTitle: z.string().min(1).max(200),
+  slug: z.string().min(1).max(100),
   uid: z.string().length(5),
   date: z.string().min(1),
   minToRead: z.string().min(1),
