@@ -21,6 +21,7 @@
   }
 
   async function mermaidRender(expr: string) {
+    mermaid.initialize({ darkMode: $mode === "dark", theme: $mode === "dark" ? "dark" : "neutral" });
     return mermaid.render("mermaid", expr);
   }
 </script>
@@ -39,9 +40,11 @@
     </HoverCard.Root>
   {/await}
 {:else if lang === "mermaid"}
-  {#await mermaidRender(text) then value}
-    <div class="my-3">{@html value.svg}</div>
-  {/await}
+  {#key $mode}
+    {#await mermaidRender(text) then value}
+      <div class="my-3">{@html value.svg}</div>
+    {/await}
+  {/key}
 {:else}
   {#key $mode}
     {#await codeBlockRenderer({ code: text, lang: lang })}
