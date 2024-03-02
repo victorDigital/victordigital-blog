@@ -3,7 +3,7 @@ import type { PageServerLoad } from "./$types";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 
 export const load = (async ({ url }) => {
-  let slug = url.pathname.split("/").pop();
+  let slug = "latex-test-post";
 
   const db = getFirestore();
   const q = query(collection(db, "posts"), where("slug", "==", slug));
@@ -13,18 +13,10 @@ export const load = (async ({ url }) => {
     author: "",
     authorUUID: "",
     content: "",
-    coverImageLink: "",
-    coverImageFile: null,
-    coverImageLink100x300Avif: "",
-    coverImageLink100x300Webp: "",
-    coverImageLink100x300Png: "",
-    coverImageLink200x600Avif: "",
-    coverImageLink200x600Webp: "",
-    coverImageLink200x600Png: "",
-    coverImageLinkAvif: "",
-    coverImageLinkWebp: "",
-    coverImageLinkPng: "",
+    coverImage: "",
     coverImageAlt: "",
+    coverImageCaption: "",
+    coverImageCredit: "",
     date: "",
     minToRead: 0,
     slug: "",

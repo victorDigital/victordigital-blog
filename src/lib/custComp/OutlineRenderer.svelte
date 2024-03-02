@@ -24,11 +24,8 @@
           {#each $outlineStore as { id, text, depth }, i}
             <button
               class="text-sm font-light
-                {'px-' + (depth - 1) * 2} 
-                text-muted-foreground hover:text-primary text-left py-1 pr-0 border-green-700 dark:border-green-500 
-                {idInView(id)
-                ? 'border-l-2'
-                : 'border-l-0'}"
+                text-muted-foreground hover:text-primary text-left py-1 border-green-700 dark:border-green-500
+                {idInView(id) ? 'border-l-2 pl-[10px]' : 'border-l-0 pl-3'}"
               on:click={() => smoothScroll("#" + id)}
             >
               {text}

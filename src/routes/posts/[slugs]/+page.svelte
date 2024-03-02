@@ -18,10 +18,9 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import { outlineStore } from "$lib/js/store";
   import OutlineRenderer from "$lib/custComp/OutlineRenderer.svelte";
-  
+
   $outlineStore = [];
   let headingsInView: Element[] = [];
-
 
   export let data: PageData;
   let post = data.post;
@@ -44,7 +43,7 @@
   });
 
   function findHeadingsInView() {
-    const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const headings = document.querySelectorAll("h1, h2");
     const headingsInView = [];
 
     for (let i = 0; i < headings.length; i++) {
@@ -77,7 +76,15 @@
 
 <div class="flex justify-center w-full mb-4">
   <div class="w-screen max-w-screen-lg lg:px-4">
-    <img src={post.coverImage} class="lg:rounded-2xl object-fill mb-3 [view-transition-name:postimg]" alt="" />
+    <!-- <img src={post.coverImage} class="lg:rounded-2xl object-fill mb-3 [view-transition-name:postimg]" alt="" /> -->
+    <div class="aspect-[3/1] flex items-center overflow-hidden mb-3 lg:rounded-2xl">
+      <picture class="">
+        <source srcset={post.coverImageLinkAvif} class="object-filllg:rounded-2xl" type="image/avif" />
+        <source srcset={post.coverImageLinkWebp} class="object-filllg:rounded-2xl" type="image/webp" />
+        <source srcset={post.coverImageLinkPng} class="object-filllg:rounded-2xl" type="image/png" />
+        <img src={post.coverImageLink} class="object-fill lg:rounded-2xl" alt={post.coverImageAlt} />
+      </picture>
+    </div>
     <div class="w-full">
       <div class="flex items-end justify-between mx-2">
         <div class="flex flex-row items-center gap-6">
@@ -136,18 +143,18 @@
 
 <div class="flex justify-center w-full">
   <div class="w-screen max-w-screen-md px-4 overflow-x-hidden prose dark:prose-invert prose-neutral">
-      <SvelteMarkdown
-        source={post.content}
-        renderers={{
-          heading: PostHeadingRenderer,
-          code: CodeBlockRenderer,
-          table: TableRenderer,
-          tablebody: TableBodyRenderer,
-          tablehead: TableHeadRenderer,
-          tablecell: TableCellRenderer,
-          tablerow: TableRowRenderer,
-        }}
-      />
+    <SvelteMarkdown
+      source={post.content}
+      renderers={{
+        heading: PostHeadingRenderer,
+        code: CodeBlockRenderer,
+        table: TableRenderer,
+        tablebody: TableBodyRenderer,
+        tablehead: TableHeadRenderer,
+        tablecell: TableCellRenderer,
+        tablerow: TableRowRenderer,
+      }}
+    />
   </div>
   {#if $outlineStore.length > 0}
     <OutlineRenderer inView={headingsInView} />

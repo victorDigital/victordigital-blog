@@ -11,7 +11,9 @@
   // the id of the heading is the text in lower case with spaces replaced by hyphens
   let id = "a" + encodeURIComponent(text.toLowerCase()).replace(/%20/g, "-").replace(/%/g, "-").replace(/\./g, "");
 
-  $outlineStore = [...($outlineStore as []), { id, text, depth }];
+  if (depth <= 2) {
+    $outlineStore = [...($outlineStore as []), { id, text }];
+  }
 
   function setUrlParam(id: string) {
     return () => {
