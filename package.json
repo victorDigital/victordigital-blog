@@ -32,6 +32,7 @@
   "type": "module",
   "dependencies": {
     "@codemirror/lang-markdown": "^6.2.4",
+    "@sveltejs/adapter-vercel": "^5.1.0",
     "@uiw/codemirror-theme-material": "^4.21.21",
     "@vercel/speed-insights": "^1.0.9",
     "bits-ui": "^0.18.1",
