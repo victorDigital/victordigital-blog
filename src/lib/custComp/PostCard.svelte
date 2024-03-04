@@ -10,10 +10,10 @@
     <div class="aspect-[3/1] overflow-hidden rounded-xl">
       <!-- <img class="group-hover:[view-transition-name:postimg]" src={post.coverImage} alt={post.coverImageAlt}> -->
       <picture>
-        <source srcset={post.coverImageLink200x600Avif} type="image/avif" />
-        <source srcset={post.coverImageLink200x600Webp} type="image/webp" />
-        <source srcset={post.coverImageLink200x600Png} type="image/png" />
-        <img src={post.coverImageLink} alt={post.coverImageAlt} />
+        <source width="600" height="200" srcset={post.coverImageLink200x600Avif} type="image/avif" />
+        <source width="600" height="200" srcset={post.coverImageLink200x600Webp} type="image/webp" />
+        <source width="600" height="200" srcset={post.coverImageLink200x600Png} type="image/png" />
+        <img width="600" height="200" src={post.coverImageLink} alt={post.coverImageAlt} />
       </picture>
     </div>
     <h2 class="mt-2 text-2xl font-semibold">{post.title}</h2>
