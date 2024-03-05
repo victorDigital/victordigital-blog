@@ -4,6 +4,7 @@
   import PostCard from "$lib/custComp/PostCard.svelte";
 
   export let data: PageData;
+  console.log(data);
 </script>
 
 <div class="w-full h-40">
@@ -19,7 +20,13 @@
     </div>
   </div>
 </div>
-<Separator class="mb-6" />
+<Separator class="mb-1" />
+<div class="container mx-auto">
+  <p class="font-mono opacity-50">
+    Found {data.posts.length} post{data.posts.length == 1 ? "" : "s"} in: {data.time}ms
+  </p>
+</div>
+<Separator class="mt-1 mb-6" />
 
 <div class="container mx-auto">
   <div class="gap-6 columns-1 sm:columns-2 md:columns-3 xl:columns-4" data-sveltekit-preload-code="viewport">

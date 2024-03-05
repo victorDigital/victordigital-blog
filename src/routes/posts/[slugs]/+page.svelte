@@ -64,13 +64,13 @@
     <div class="flex items-center gap-4">
       <Badge
         variant="outline"
-        class="{'border-' + post.topicColor + '-700'} {'dark:border-' + post.topicColor + '-500'} text-sm mb-3 mt-6"
+        class="{'border-' + post.topiccolor + '-700'} {'dark:border-' + post.topiccolor + '-500'} text-sm mb-3 mt-6"
         >{post.topic}</Badge
       >
-      <span class="mt-6 mb-3 ml-2 text-sm font-light">{post.minToRead} min read</span>
+      <span class="mt-6 mb-3 ml-2 text-sm font-light">{post.mintoread} min read</span>
     </div>
     <h1 class="text-3xl font-black lg:text-5xl">{post.title}</h1>
-    <h2 class="mt-3 mb-6 text-xl font-light">{post.subTitle}</h2>
+    <h2 class="mt-3 mb-6 text-xl font-light">{post.subtitle}</h2>
   </div>
 </div>
 
@@ -79,10 +79,10 @@
     <!-- <img src={post.coverImage} class="lg:rounded-2xl object-fill mb-3 [view-transition-name:postimg]" alt="" /> -->
     <div class="aspect-[3/1] flex items-center overflow-hidden mb-3 lg:rounded-2xl">
       <picture class="">
-        <source srcset={post.coverImageLinkAvif} class="object-filllg:rounded-2xl" type="image/avif" />
-        <source srcset={post.coverImageLinkWebp} class="object-filllg:rounded-2xl" type="image/webp" />
-        <source srcset={post.coverImageLinkPng} class="object-filllg:rounded-2xl" type="image/png" />
-        <img src={post.coverImageLink} class="object-fill lg:rounded-2xl" alt={post.coverImageAlt} />
+        <source srcset={post.coverimagelinkavif} class="object-filllg:rounded-2xl" type="image/avif" />
+        <source srcset={post.coverimagelinkwebp} class="object-filllg:rounded-2xl" type="image/webp" />
+        <source srcset={post.coverimagelinkpng} class="object-filllg:rounded-2xl" type="image/png" />
+        <img src={post.coverimagelink} class="object-fill lg:rounded-2xl" alt={post.coverimagealt} />
       </picture>
     </div>
     <div class="w-full">

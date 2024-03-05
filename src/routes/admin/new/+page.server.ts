@@ -4,57 +4,13 @@ import { zod } from "sveltekit-superforms/adapters";
 import { superValidate, withFiles } from "sveltekit-superforms/server";
 import { formSchema } from "./schema";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { sql } from "@vercel/postgres";
 
 export const load = async () => {
   return {
     form: await superValidate(zod(formSchema)),
   };
 };
-
-// superforms v1 DEPRECATED
-//export const actions: Actions = {
-//  default: async (event) => {
-//    const formData = await event.request.formData();
-//    const form = await superValidate(zod(formSchema));
-//    console.log("Form valid:", form.valid);
-//    if (!form.valid) {
-//      return fail(400, {
-//        form,
-//      });
-//    }
-//
-//    const file = formData.get("coverImage");
-//    if (file instanceof File) {
-//      //read the filename and type
-//      const filename = file.name;
-//
-//      //upload file to firebase storage bucket and get url
-//      const storage = getStorage();
-//      const storageRef = ref(storage, filename);
-//      await uploadBytes(storageRef, file);
-//
-//      const downloadURL = await getDownloadURL(storageRef);
-//
-//      //now create a new post in the firestore
-//      const post = {
-//        ...form.data,
-//        AIsummary: "Unimplemented AI summary",
-//        coverImage: downloadURL,
-//      };
-//
-//      //add the post to the firestore
-//      const db = getFirestore();
-//      const docRef = await addDoc(collection(db, "posts"), post);
-//      console.log("Document written with ID: ", docRef.id);
-//      throw redirect(302, "/a/" + form.data.uid);
-//    }
-//
-//    return {
-//      form,
-//    };
-//  },
-//};
 
 export const actions = {
   default: async ({ request, fetch }) => {
@@ -96,11 +52,16 @@ export const actions = {
         coverImageLink200x600Png: await formatConvert(fetch, downloadURL, "png", 600, 200),
       };
 
-      //add the post to the firestore
-      const db = getFirestore();
-      const docRef = await addDoc(collection(db, "posts"), post);
-      console.log("Document written with ID: ", docRef.id);
-      throw redirect(302, "/a/" + form.data.uid);
+      //add the post to the vercel postgres database
+      await sql`INSERT INTO Posts ( AIsummary, Author, AuthorUUID, Content, CoverImageLink, CoverImageLinkAvif,
+      CoverImageLinkWebp, CoverImageLinkPng, CoverImageLink100x300Avif, CoverImageLink100x300Webp, CoverImageLink100x300Png,
+      CoverImageLink200x600Avif, CoverImageLink200x600Webp, CoverImageLink200x600Png, CoverImageAlt, Date, MinToRead,
+      Slug, SubTitle, Title, Topic, TopicColor, UID ) VALUES ( ${post.AIsummary}, ${post.author}, ${post.authorUUID}, ${post.content}, ${post.coverImageLink},
+      ${post.coverImageLinkAvif}, ${post.coverImageLinkWebp}, ${post.coverImageLinkPng}, ${post.coverImageLink100x300Avif}, ${post.coverImageLink100x300Webp},
+      ${post.coverImageLink100x300Png}, ${post.coverImageLink200x600Avif}, ${post.coverImageLink200x600Webp}, ${post.coverImageLink200x600Png}, ${post.coverImageAlt},
+      ${post.date}, ${post.minToRead}, ${post.slug}, ${post.subTitle}, ${post.title}, ${post.topic}, ${post.topicColor}, ${post.uid} )`;
+
+      return redirect(302, "/posts/" + post.slug);
     }
 
     return withFiles({ form });
